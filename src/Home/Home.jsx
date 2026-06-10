@@ -11,7 +11,7 @@ import Season7 from './HomeComponents/Season7'
 const Home = () => {
   return (
     <div>
-      <Season1></Season1>
+      <div className='my-3.5 mt-4'><Season1></Season1></div>
       <Season2></Season2>
       <Season3></Season3>
       <Season4></Season4>
