@@ -5,12 +5,12 @@ import ProFast from '../PfoFast/ProFast';
 const DashboardLayout = () => {
     return (
         <div className="drawer lg:drawer-open">
-            
+
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
-            <div className="drawer-content flex flex-col">
+            <div className="drawer-content bg-amber-700">
                 {/* Navbar */}
-                <div className="navbar bg-base-300 w-full lg:hidden">
+                {/* <div className="navbar bg-base-300 w-full lg:hidden">
                     <div className="flex-none lg:hidden">
                         <label
                             htmlFor="my-drawer-2"
@@ -34,12 +34,10 @@ const DashboardLayout = () => {
                     </div>
 
                     <div className="mx-2 flex-1 px-2">Navbar Title</div>
-                </div>
+                </div> */}
 
-                {/* Main Content */}
-                <div className="p-5">
-                    <Outlet></Outlet>
-                </div>
+                <Outlet></Outlet>
+
             </div>
 
             <div className="drawer-side">
@@ -51,11 +49,11 @@ const DashboardLayout = () => {
 
                 <ul className="menu bg-base-200 min-h-full w-80 p-4">
                     <ProFast></ProFast>
-                    <li><Link to="myparcel">MyParcel</Link></li>
+                    <li><Link to="myparcel">My Parcel</Link></li>
                     <li><a>Sidebar Item s2</a></li>
                 </ul>
             </div>
-            
+
         </div>
     )
 }

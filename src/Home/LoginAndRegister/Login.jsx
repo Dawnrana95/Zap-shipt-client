@@ -1,10 +1,12 @@
 import React, { use } from 'react'
-import { NavLink } from 'react-router';
+import {  NavLink, useNavigate } from 'react-router';
 import { Autchontex } from './Context/AuthContext';
 
 export const Login = () => {
 
     const {signInUser,signOutUser} = use(Autchontex)
+    const navigate = useNavigate()
+  
 
 
     const handalLogin = e => {
@@ -17,6 +19,7 @@ export const Login = () => {
         signInUser(email,password)
         .then(result => {
             console.log(result.user);
+            navigate('/')
         })
         .catch(error => {
             console.log(error);

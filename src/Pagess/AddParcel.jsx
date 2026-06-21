@@ -1,28 +1,38 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 const AddParcel = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const parcelType = watch('parcelType', 'document');
 
- const onSubmit = (data) => {
-  console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
 
-  fetch("http://localhost:5000/applications", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => res.json())
-    .then((result) => {
-      console.log("After Post on MongoDB:", result);
+    fetch("http://localhost:5000/applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
-    .catch((error) => {
-      console.error(error);
-    });
-};
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("After Post on MongoDB:", result);
+        if (result.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6">
@@ -63,7 +73,7 @@ const AddParcel = () => {
             <input
               type="email"
               placeholder="your@email.com"
-              {...register('email', { 
+              {...register('email', {
                 required: 'Email address is required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -74,7 +84,7 @@ const AddParcel = () => {
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
-          
+
           <div>
             <label className="block font-semibold mb-2">Parcel Name</label>
             <input
@@ -83,7 +93,7 @@ const AddParcel = () => {
               {...register('parcelName', { required: 'Parcel name is required' })}
               className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.parcelName ? 'border-red-500' : 'border-gray-300'}`}
             />
-            
+
             {errors.parcelName && <p className="text-red-500 text-sm mt-1">{errors.parcelName.message}</p>}
           </div>
           <div>

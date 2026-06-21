@@ -16,6 +16,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Login } from './Home/LoginAndRegister/Login.jsx';
 import Register from './Home/LoginAndRegister/Register.jsx';
 import AuthProvider from './Home/LoginAndRegister/Context/AuthProvider.jsx';
+import PrivatRouter from './Router/PrivatRouter.jsx';
 
 
 
@@ -32,24 +33,23 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: '/addparcel',
+        path: 'addparcel',
         Component: AddParcel,
       },
       {
-        path: '/login',
+        path: 'login',
         Component: Login
       },
       {
-        path: '/register',
+        path: 'register',
         Component: Register
       }
 
     ]
   },
-
   {
     path: 'dashboard',
-    Component: DashboardLayout,
+    element: <PrivatRouter><DashboardLayout></DashboardLayout></PrivatRouter>,
     children: [
       {
         path: 'myparcel',
@@ -61,15 +61,15 @@ const router = createBrowserRouter([
 ]);
 
 
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
-      <div className='w-7xl mx-auto'>
+
+    <div className='w-7xl mx-auto'>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />,
+        <AuthProvider>
+          <RouterProvider router={router} />,
+        </AuthProvider>
       </QueryClientProvider>
     </div>
-    </AuthProvider>
   </StrictMode>,
 )

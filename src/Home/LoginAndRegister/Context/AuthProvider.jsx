@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
         const unsuscrive = onAuthStateChanged(auth, currentUser => {
             setLoding(false)
             setUser(currentUser)
-            console.log('useEffect',currentUser)
+            // console.log('useEffect',currentUser)
         })
         return () => {
             unsuscrive
@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
     const userInfo = {
         createUser,
         signInUser,
-        // loding,
+        loding,
         user,
         signOutUser,
 
