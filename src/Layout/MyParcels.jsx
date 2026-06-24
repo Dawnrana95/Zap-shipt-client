@@ -2,10 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 import React, { use } from 'react'
 import { Autchontex } from '../Home/LoginAndRegister/Context/AuthContext'
 import axios from 'axios'
+import { useNavigate } from 'react-router'
 
 
 const MyParcel = () => {
   const { user } = use(Autchontex)
+  const navigate = useNavigate()
 
   // TenStak Quary
   const { data: Parcel = [],refetch } = useQuery({
@@ -27,6 +29,9 @@ const MyParcel = () => {
       })
 
       .catch(err => { console.log(err) });
+  }
+  const handalPay= (id) =>{
+    navigate(`/dashboard/payment/${id}`)
   }
 
 
@@ -56,8 +61,11 @@ const MyParcel = () => {
               <td>{p.price || 180}</td>
 
               <td>
-                <button className="btn btn-xs btn-info mr-1">
+                <button  className="btn btn-xs btn-info mr-1">
                   View
+                </button>
+                <button onClick={() => handalPay(p._id)} className="btn btn-xs btn-info mr-1 bg-amber-200">
+                  Pay
                 </button>
                 <button onClick={() => handalOnDeelet(p._id)} className="btn btn-xs btn-error">
                   Delete

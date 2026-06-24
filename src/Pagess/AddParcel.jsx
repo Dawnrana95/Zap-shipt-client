@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 const AddParcel = () => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, setValue, handleSubmit, watch, formState: { errors } } = useForm();
   const parcelType = watch('parcelType', 'document');
+
+
+  const weight = watch('parcelWeight')
+
+  useEffect(() => {
+    if (weight <= 1) setValue('price', 100)
+    else if (weight <= 2) setValue('price', 150)
+    else if (weight <= 3) setValue('price', 250)
+    else if (weight > 3) setValue('price', 500)
+  }, [weight])
 
   const onSubmit = (data) => {
     console.log(data);
@@ -109,6 +119,12 @@ const AddParcel = () => {
               className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.parcelWeight ? 'border-red-500' : 'border-gray-300'}`}
             />
             {errors.parcelWeight && <p className="text-red-500 text-sm mt-1">{errors.parcelWeight.message}</p>}
+          </div>
+
+          {/* value={100} সরিয়ে দিন */}
+          <div>
+            <label className="font-semibold mb-2">Price</label>
+            <p className='border-1 p-3 '> 1kg =100  2kg =200 3kg=300 4kg+ = 500</p>
           </div>
         </div>
 

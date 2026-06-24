@@ -17,6 +17,7 @@ import { Login } from './Home/LoginAndRegister/Login.jsx';
 import Register from './Home/LoginAndRegister/Register.jsx';
 import AuthProvider from './Home/LoginAndRegister/Context/AuthProvider.jsx';
 import PrivatRouter from './Router/PrivatRouter.jsx';
+import Payment from './Layout/Payment.jsx';
 
 
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: 'myparcel',
         Component: MyParcels,
+      },
+      {
+        path: `payment/:id`,
+        Component: Payment,
       }
     ]
 
