@@ -46,8 +46,9 @@ const MyParcel = () => {
             <th>Parcel Type</th>
             <th>User</th>
             <th>Date</th>
-            <th>Price (BDT)</th>
-            <th>Status</th>
+            <th>Price </th>
+            <th>Statas</th>
+          
 
           </tr>
         </thead>
@@ -61,9 +62,16 @@ const MyParcel = () => {
               <td>{p.price || 180}</td>
 
               <td>
+                {
+                  p.payment_statas ? <button className="btn  btn-info mr-1 bg-emerald-700">Paid</button> : <button  className="btn btn-xs btn-info mr-1 bg-amber-200">
+                  Panding
+                  </button>
+                }
+                
                 <button  className="btn btn-xs btn-info mr-1">
                   View
                 </button>
+                
                 <button onClick={() => handalPay(p._id)} className="btn btn-xs btn-info mr-1 bg-amber-200">
                   Pay
                 </button>

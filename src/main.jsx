@@ -18,6 +18,7 @@ import Register from './Home/LoginAndRegister/Register.jsx';
 import AuthProvider from './Home/LoginAndRegister/Context/AuthProvider.jsx';
 import PrivatRouter from './Router/PrivatRouter.jsx';
 import Payment from './Layout/Payment.jsx';
+import PaymentHistory from './Layout/PaymentHistory.jsx';
 
 
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: `payment/:id`,
         Component: Payment,
+      },
+      {
+        path: 'paymentHistory',
+        Component: PaymentHistory
       }
     ]
 

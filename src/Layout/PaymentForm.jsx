@@ -1,14 +1,17 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import { useParams } from 'react-router';
+import { Autchontex } from '../Home/LoginAndRegister/Context/AuthContext';
 
 const PaymentForm = () => {
     const [error, setError] = useState('')
     const { id } = useParams()  //Parcel Id
+    const {user} = use(Autchontex)
+    const email= user.email
 
-
+    // Current parcel
     const { data: Crrrentparcel = {} } = useQuery({
         queryKey: ['parcel', id],
         queryFn: async () => {
@@ -16,11 +19,12 @@ const PaymentForm = () => {
             return res.data
         }
     })
-
     const amount = Crrrentparcel.price;
 
+    // import stripr
     const stripe = useStripe();
     const elements = useElements();
+
 
     const handalOnsubmit = async (e) => {
         e.preventDefault()
@@ -34,32 +38,27 @@ const PaymentForm = () => {
             return;
         }
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card,
-        })
+        const { error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card, })
         if (error) {
             setError(error.message)
-        } else {
+        }
+        else {
             setError('')
-            console.log('PaymentMethod', paymentMethod);
+            console.log('PaymentMethod', paymentMethod)
         }
 
-
-        //Creat Payment
+        //Creat Payment secter //
         const res = await axios.post('http://localhost:5000/create-payment-intent', { amount, id })
-            
         const clientSecret = res.data.clientSecret;
 
-
+        // confitm Payment //
         const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
-                billing_details: {
-                    name: 'Asif Rana'
-                }
+                billing_details: { name: 'Asif Rana' }
             }
         })
+        
         if (result.error) {
             console.log(result.error.message)
         }
@@ -67,10 +66,21 @@ const PaymentForm = () => {
             if (result.paymentIntent.status === 'succeeded') {
                 console.log('Payment succeede')
                 console.log(result)
+
+                // Create payment hostory
+                const paymentData = {
+                    parcelid: id,
+                    email,
+                    amount,
+                    paymentMethod : result.paymentIntent.payment_method_types,
+                    transactionId: result.paymentIntent.id,
+                }
+                const paymentResponse = await axios.post('http://localhost:5000/paymentstatas',paymentData)
+                if(paymentResponse.data.insertedId){
+                    console.log('Payment succesfull')
+                }
             }
         }
-
-
     }
 
 

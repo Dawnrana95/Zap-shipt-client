@@ -50,7 +50,7 @@ const DashboardLayout = () => {
                 <ul className="menu bg-base-200 min-h-full w-80 p-4">
                     <ProFast></ProFast>
                     <li><Link to="myparcel">My Parcel</Link></li>
-                    <li><a>Sidebar Item s2</a></li>
+                    <li><Link to="paymentHistory">Payment History</Link></li>
                 </ul>
             </div>
 
